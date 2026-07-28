@@ -16,7 +16,7 @@
     content="You are invited to celebrate the wedding of Rupesh and Nidhi on 3 and 4 December 2026 at Sindhu Bhawan, Rewa."
   >
 
-  <meta name="theme-color" content="#173f3a">
+  <meta name="theme-color" content="#b8c9b8">
 
   <meta property="og:title" content="Rupesh &amp; Nidhi | Wedding Invitation">
 
@@ -243,32 +243,58 @@
 
       position: absolute;
       top: -28px;
-      width: 10px;
-      height: 16px;
-      border-radius: 70% 30% 70% 30%;
-      background: linear-gradient(
-        145deg,
-        var(--champagne-light),
-        var(--champagne)
-      );
-      opacity: 0.85;
+      width: 14px;
+      height: 14px;
+      opacity: 0.9;
       animation: petalFall linear forwards;
     }
 
-    .petal.blush {
-      background: linear-gradient(
-        145deg,
-        var(--blush-soft),
-        var(--blush)
+    .petal::before {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: radial-gradient(
+        circle at 50% 45%,
+        #ffe566 0 18%,
+        #e87898 19% 100%
+      );
+      content: "";
+      clip-path: polygon(
+        50% 0%,
+        62% 35%,
+        98% 35%,
+        68% 57%,
+        79% 92%,
+        50% 72%,
+        21% 92%,
+        32% 57%,
+        2% 35%,
+        38% 35%
       );
     }
 
-    .petal.sage {
-      background: linear-gradient(
-        145deg,
-        var(--sage-soft),
-        var(--sage)
+    .petal.leaf::before {
+      width: 8px;
+      height: 14px;
+      border-radius: 0 70% 0 70%;
+      background: linear-gradient(145deg, #a8c4a0, #6d8f66);
+      clip-path: none;
+    }
+
+    .petal.blush::before {
+      background: radial-gradient(
+        circle at 50% 45%,
+        #ffe566 0 18%,
+        #f06b8f 19% 100%
       );
+    }
+
+    .petal.sage::before {
+      width: 8px;
+      height: 14px;
+      border-radius: 0 70% 0 70%;
+      background: linear-gradient(145deg, #b8cdb2, #7a9a72);
+      clip-path: none;
     }
 
     @keyframes petalFall {
@@ -290,16 +316,13 @@
     }
 
     /* ============================================
-       MODERN ENVELOPE
+       ENVELOPE GATE (Reference Style)
     ============================================ */
 
     .gate {
-      --envelope-green: #315e57;
-      --envelope-green-light: #71958c;
-      --envelope-green-dark: #173f3a;
-      --envelope-gold: #d6b56f;
-      --envelope-gold-light: #f3dfa9;
-      --envelope-blush: #d8aaa0;
+      --gate-bg: #b8c9b8;
+      --gate-text: #5a6f5a;
+      --gate-text-soft: #6d826d;
 
       position: fixed;
       inset: 0;
@@ -310,48 +333,8 @@
       place-items: center;
       overflow: hidden;
       padding: 30px 20px;
-      background:
-        radial-gradient(
-          circle at 12% 18%,
-          rgba(216, 170, 160, 0.38),
-          transparent 31%
-        ),
-        radial-gradient(
-          circle at 88% 82%,
-          rgba(116, 150, 141, 0.34),
-          transparent 34%
-        ),
-        radial-gradient(
-          circle at 80% 12%,
-          rgba(214, 181, 111, 0.17),
-          transparent 26%
-        ),
-        linear-gradient(
-          145deg,
-          #fcfaf6 0%,
-          #f5f0e8 52%,
-          #ebe7df 100%
-        );
-      transition: opacity 0.4s ease 1.3s;
-    }
-
-    .gate::before {
-      position: absolute;
-      inset: 20px;
-      border: 1px solid rgba(23, 63, 58, 0.13);
-      border-radius: 32px;
-      content: "";
-      pointer-events: none;
-    }
-
-    /* Subtle full-background pattern */
-    .gate::after {
-      position: absolute;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0c0 11-9 20-20 20 11 0 20 9 20 20 0-11 9-20 20-20-11 0-20-9-20-20z' fill='%23d6b56f' fill-opacity='0.05'/%3E%3C/svg%3E");
-      background-size: 60px 60px;
-      content: "";
-      pointer-events: none;
+      background: var(--gate-bg);
+      transition: opacity 0.45s ease 0.35s;
     }
 
     .gate.is-open {
@@ -364,425 +347,146 @@
       pointer-events: none;
     }
 
-    /* ARTISTIC CORNERS FOR THE BACKGROUND */
-    .gate-corner-art {
+    .gate-flowers {
       position: absolute;
-      width: clamp(150px, 30vw, 300px);
-      height: clamp(150px, 30vw, 300px);
+      inset: 0;
+      z-index: 1;
+      overflow: hidden;
       pointer-events: none;
-      opacity: 0.8;
     }
 
-    .gate-corner-art.top-left {
-      top: 0;
-      left: 0;
-      transform: translate(-15%, -15%);
+    .gate-flower {
+      position: absolute;
+      width: var(--size, 22px);
+      height: var(--size, 22px);
+      opacity: var(--opacity, 0.85);
+      transform: rotate(var(--rotate, 0deg));
+      animation: flowerFloat 6s ease-in-out infinite;
+      animation-delay: var(--delay, 0s);
     }
 
-    .gate-corner-art.bottom-right {
-      bottom: 0;
-      right: 0;
-      transform: translate(15%, 15%) rotate(180deg);
+    .gate-flower svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    @keyframes flowerFloat {
+      0%,
+      100% {
+        transform: rotate(var(--rotate, 0deg)) translateY(0);
+      }
+
+      50% {
+        transform: rotate(var(--rotate, 0deg)) translateY(-6px);
+      }
     }
 
     .envelope-scene {
       position: relative;
       z-index: 2;
-      width: min(100%, 560px);
+      width: min(100%, 420px);
       text-align: center;
       transition:
-        opacity 0.35s ease 1.25s,
-        transform 0.45s ease 1.25s;
+        opacity 0.35s ease 0.3s,
+        transform 0.45s ease 0.3s;
     }
 
     .gate.is-open .envelope-scene {
       opacity: 0;
-      transform: translateY(-8px) scale(1.02);
+      transform: translateY(-10px) scale(1.02);
     }
 
-    .envelope-copy {
-      margin-bottom: 30px;
-      transition:
-        opacity 0.3s ease,
-        transform 0.3s ease;
+    .envelope-open {
+      position: relative;
+      display: inline-block;
+      padding: 0;
+      border: none;
+      background: none;
+      cursor: pointer;
+      transition: transform 0.3s ease;
     }
 
-    .gate.is-open .envelope-copy {
-      opacity: 0;
-      transform: translateY(-12px);
+    .envelope-open:hover {
+      transform: scale(1.02);
     }
 
-    .envelope-eyebrow {
+    .envelope-open:active {
+      transform: scale(0.98);
+    }
+
+    .envelope-img {
+      display: block;
+      width: min(72vw, 300px);
+      height: auto;
+      filter: drop-shadow(0 14px 28px rgba(45, 62, 52, 0.18));
+    }
+
+    .envelope-seal-badge {
+      position: absolute;
+      top: 50%;
+      left: 50%;
       display: flex;
+      width: clamp(54px, 17vw, 68px);
+      height: clamp(54px, 17vw, 68px);
       align-items: center;
       justify-content: center;
-      gap: 13px;
-      margin-bottom: 10px;
-      color: var(--envelope-green-dark);
-      font-size: 0.65rem;
-      font-weight: 500;
-      letter-spacing: 0.31em;
-      text-transform: uppercase;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 38% 32%, #ecdcc4, transparent 38%),
+        radial-gradient(circle at 72% 78%, rgba(0, 0, 0, 0.14), transparent 40%),
+        linear-gradient(155deg, #d9bc94 0%, #b8926a 100%);
+      box-shadow:
+        0 5px 14px rgba(45, 62, 52, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.45),
+        inset 0 -2px 5px rgba(90, 60, 30, 0.18);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
     }
 
-    .envelope-eyebrow::before,
-    .envelope-eyebrow::after {
-      width: 28px;
-      height: 1px;
-      background: var(--envelope-gold);
-      content: "";
-    }
-
-    .envelope-title {
-      color: var(--envelope-green-dark);
+    .envelope-seal-text {
+      display: inline-flex;
+      align-items: center;
+      gap: 1px;
+      color: #fff;
       font-family: var(--serif);
-      font-size: clamp(2.7rem, 9vw, 4.5rem);
-      font-weight: 500;
-      letter-spacing: -0.03em;
+      font-size: clamp(0.78rem, 2.6vw, 0.95rem);
+      font-weight: 600;
+      letter-spacing: 0.02em;
       line-height: 1;
+      text-shadow: 0 1px 2px rgba(70, 45, 20, 0.35);
     }
 
-    .envelope-title span {
-      color: var(--envelope-blush);
+    .envelope-seal-text .seal-amp {
+      margin: 0 1px;
+      color: #fff;
       font-family: var(--script);
       font-size: 1.12em;
       font-weight: 400;
     }
 
-    .envelope-shell {
-      position: relative;
-      width: min(88vw, 460px);
-      aspect-ratio: 1.5;
-      margin: 0 auto;
-      filter:
-        drop-shadow(0 30px 35px rgba(23, 63, 58, 0.18))
-        drop-shadow(0 8px 12px rgba(23, 63, 58, 0.1));
-      perspective: 1400px;
-      transform-style: preserve-3d;
-    }
-
-    /* ENVELOPE BACK WITH LUXURY PATTERN */
-    .envelope-back {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 20px;
-      background-color: var(--envelope-green-dark);
-      background-image: 
-        radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.14), transparent 48%),
-        url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0c0 11-9 20-20 20 11 0 20 9 20 20 0-11 9-20 20-20-11 0-20-9-20-20z' fill='%23d6b56f' fill-opacity='0.15'/%3E%3C/svg%3E");
-      background-size: 100% 100%, 50px 50px;
-    }
-
-    .envelope-back::before {
-      position: absolute;
-      inset: 12px;
-      border: 1px solid rgba(243, 223, 169, 0.17);
-      border-radius: 13px;
-      content: "";
-    }
-
-    /* UPGRADED LETTER INSIDE */
-    .envelope-letter {
-      position: absolute;
-      right: 7%;
-      bottom: 7%;
-      left: 7%;
-      z-index: 2;
-      display: flex;
-      height: 88%;
-      align-items: center;
-      flex-direction: column;
-      justify-content: flex-start;
-      padding: 24px 18px;
-      border: 1px solid rgba(214, 181, 111, 0.48);
-      border-radius: 17px;
-      background:
-        radial-gradient(circle at 20% 15%, rgba(216, 170, 160, 0.14), transparent 27%),
-        linear-gradient(155deg, #fffdf8, #f7efe2);
-      box-shadow: 0 15px 35px rgba(23, 63, 58, 0.14);
-      transform: translateY(3%);
-      transition: transform 0.9s cubic-bezier(0.2, 0.85, 0.25, 1) 0.38s;
-    }
-
-    .gate.is-open .envelope-letter {
-      transform: translateY(-53%) scale(1.025);
-    }
-
-    .envelope-letter::before {
-      position: absolute;
-      inset: 8px;
-      border: 1px solid rgba(214, 181, 111, 0.4);
-      border-radius: 11px;
-      content: "";
-      pointer-events: none;
-    }
-
-    .envelope-letter::after {
-      position: absolute;
-      inset: 12px;
-      border: 1px solid rgba(214, 181, 111, 0.15);
-      border-radius: 8px;
-      content: "";
-      pointer-events: none;
-    }
-
-    .letter-header-art {
-      width: 100px;
-      height: auto;
-      margin-bottom: 10px;
-      color: var(--envelope-gold);
-    }
-
-    .letter-monogram {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      width: 68px;
-      height: 68px;
-      align-items: center;
-      justify-content: center;
-      gap: 3px;
-      margin-bottom: 12px;
-      border: 1px solid var(--envelope-gold);
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.55);
-      color: var(--envelope-green-dark);
-      font-family: var(--serif);
-      font-size: 1.25rem;
-      font-weight: 600;
-    }
-
-    .letter-monogram span {
-      color: var(--envelope-blush);
+    .envelope-invited {
+      margin-top: 26px;
+      color: var(--gate-text);
       font-family: var(--script);
-      font-size: 1.1em;
+      font-size: clamp(2rem, 7vw, 2.75rem);
       font-weight: 400;
+      line-height: 1.1;
     }
 
-    .letter-kicker {
-      position: relative;
-      z-index: 2;
-      margin-bottom: 9px;
-      color: var(--envelope-green-dark);
-      font-size: 0.55rem;
-      font-weight: 500;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-    }
-
-    .letter-venue {
-      position: relative;
-      z-index: 2;
-      margin-top: 5px;
-      color: var(--envelope-green);
-      font-size: 0.62rem;
-      font-weight: 500;
-      letter-spacing: 0.11em;
-      text-transform: uppercase;
-    }
-
-    /* ENVELOPE FLAP WITH LUXURY ART */
-    .envelope-flap {
-      position: absolute;
-      top: 0;
-      right: 0;
-      left: 0;
-      z-index: 6;
-      height: 57%;
-      border-radius: 20px 20px 0 0;
-      background-color: var(--envelope-green-dark);
-      background-image: 
-        radial-gradient(circle at 50% 5%, rgba(255, 255, 255, 0.13), transparent 45%),
-        url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0c0 11-9 20-20 20 11 0 20 9 20 20 0-11 9-20 20-20-11 0-20-9-20-20z' fill='%23d6b56f' fill-opacity='0.15'/%3E%3C/svg%3E");
-      background-size: 100% 100%, 50px 50px;
-      clip-path: polygon(0 0, 100% 0, 50% 100%);
-      transform: rotateX(0deg);
-      transform-origin: top center;
-      transform-style: preserve-3d;
-      transition:
-        transform 0.8s cubic-bezier(0.55, 0, 0.2, 1),
-        z-index 0s linear 0.8s;
-    }
-
-    /* Flap centered gold art piece */
-    .flap-art {
-      position: absolute;
-      top: 15%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 140px;
-      height: auto;
-      color: var(--envelope-gold);
-      opacity: 0.85;
-      pointer-events: none;
-    }
-
-    /* Inside of the flap (when opened) */
-    .envelope-flap::after {
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at 30% 25%, rgba(216, 170, 160, 0.45), transparent 30%),
-        radial-gradient(circle at 70% 50%, rgba(214, 181, 111, 0.22), transparent 32%),
-        linear-gradient(145deg, #f4e6dc, #dfc4b9);
-      clip-path: inherit;
-      content: "";
-      opacity: 0;
-      transition: opacity 0.3s ease 0.28s;
-    }
-
-    .gate.is-open .envelope-flap {
-      z-index: 0;
-      transform: rotateX(-180deg);
-    }
-
-    .gate.is-open .envelope-flap::after {
-      opacity: 1;
-    }
-
-    /* ENVELOPE FRONT PANELS WITH LUXURY ART */
-    .envelope-front {
-      position: absolute;
-      inset: 0;
-      z-index: 4;
-      overflow: hidden;
-      border-radius: 20px;
-      pointer-events: none;
-    }
-
-    .envelope-front span {
-      position: absolute;
-      inset: 0;
-      background-color: var(--envelope-green-dark);
-      background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0c0 11-9 20-20 20 11 0 20 9 20 20 0-11 9-20 20-20-11 0-20-9-20-20z' fill='%23d6b56f' fill-opacity='0.12'/%3E%3C/svg%3E");
-      background-size: 50px 50px;
-    }
-
-    .envelope-fold-left {
-      z-index: 1;
-      clip-path: polygon(0 0, 54% 56%, 0 100%);
-      box-shadow: inset -5px 0 15px rgba(0,0,0,0.1);
-    }
-
-    .envelope-fold-right {
-      z-index: 1;
-      clip-path: polygon(100% 0, 100% 100%, 46% 56%);
-      box-shadow: inset 5px 0 15px rgba(0,0,0,0.1);
-    }
-
-    .envelope-fold-bottom {
-      z-index: 2;
-      clip-path: polygon(0 100%, 50% 47%, 100% 100%);
-    }
-
-    /* Bottom fold intricate art pointing up */
-    .fold-bottom-art {
-      position: absolute;
-      bottom: 5px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 120px;
-      height: auto;
-      color: var(--envelope-gold);
-      opacity: 0.85;
-      z-index: 3;
-    }
-
-    .envelope-front::after {
-      position: absolute;
-      right: 15px;
-      bottom: 14px;
-      left: 15px;
-      z-index: 3;
-      height: 1px;
-      background: rgba(243, 223, 169, 0.18);
-      content: "";
-    }
-
-    /* MODERN PULSING SEAL (Takes over the open action) */
-    .envelope-seal {
-      position: absolute;
-      top: 49%;
-      left: 50%;
-      z-index: 8;
-      display: flex;
-      width: 72px;
-      height: 72px;
-      align-items: center;
-      justify-content: center;
-      gap: 2px;
-      border: 1px solid rgba(255, 255, 255, 0.58);
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at 35% 27%, #fff5d2, transparent 25%),
-        linear-gradient(145deg, var(--envelope-gold-light), #bd9145);
-      box-shadow:
-        0 12px 26px rgba(16, 45, 42, 0.3),
-        inset 0 0 0 5px rgba(255, 255, 255, 0.22);
-      color: var(--envelope-green-dark);
+    .envelope-hint {
+      margin-top: 10px;
+      color: var(--gate-text-soft);
       font-family: var(--serif);
-      font-size: 1rem;
-      font-weight: 600;
-      transform: translate(-50%, -50%);
-      transition:
-        opacity 0.25s ease,
-        box-shadow 0.25s ease,
-        transform 0.25s ease;
-      cursor: pointer;
+      font-size: clamp(0.82rem, 2.5vw, 0.95rem);
+      font-style: italic;
+      letter-spacing: 0.01em;
+      transition: opacity 0.2s ease;
     }
 
-    .envelope-seal::before {
-      position: absolute;
-      inset: 7px;
-      border: 1px solid rgba(23, 63, 58, 0.24);
-      border-radius: 50%;
-      content: "";
-    }
-
-    /* Pulsing effect to draw attention to the seal */
-    .envelope-seal::after {
-      position: absolute;
-      inset: -8px;
-      border: 1px solid rgba(214, 181, 111, 0.6);
-      border-radius: 50%;
-      content: "";
-      animation: sealPulse 2.2s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
-    }
-
-    @keyframes sealPulse {
-      0% {
-        transform: scale(0.85);
-        opacity: 1;
-      }
-      100% {
-        transform: scale(1.4);
-        opacity: 0;
-      }
-    }
-
-    .envelope-seal i {
-      color: #996d66;
-      font-family: var(--script);
-      font-size: 1.15em;
-      font-style: normal;
-      font-weight: 400;
-    }
-
-    .envelope-seal:hover {
-      box-shadow:
-        0 16px 34px rgba(16, 45, 42, 0.36),
-        0 0 0 8px rgba(214, 181, 111, 0.18),
-        inset 0 0 0 5px rgba(255, 255, 255, 0.22);
-      transform: translate(-50%, -50%) scale(1.06);
-    }
-
-    .gate.is-open .envelope-seal {
+    .gate.is-open .envelope-hint,
+    .gate.is-open .envelope-invited {
       opacity: 0;
-      pointer-events: none;
-      transform: translate(-50%, -50%) scale(0.6);
     }
 
 
@@ -921,10 +625,10 @@
     }
 
     .ganesha-icon {
-      width: 75px;
-      height: 75px;
+      width: 96px;
+      height: 96px;
       object-fit: contain;
-      filter: drop-shadow(0 4px 15px rgba(214, 181, 111, 0.25));
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
     }
 
     .ganesha-fallback {
@@ -1844,18 +1548,6 @@
       opacity: 0.65;
     }
 
-    .footer-share {
-      margin-top: 25px;
-      border-color: var(--champagne);
-      background: transparent;
-      color: var(--champagne-pale);
-    }
-
-    .footer-share:hover {
-      background: var(--champagne);
-      color: var(--pine-deep);
-    }
-
     /* ============================================
        TOAST
     ============================================ */
@@ -2009,28 +1701,8 @@
         padding: 25px 16px;
       }
 
-      .gate::before {
-        inset: 10px;
-        border-radius: 23px;
-      }
-
-      .envelope-shell {
-        width: min(90vw, 390px);
-      }
-
-      .envelope-seal {
-        width: 65px;
-        height: 65px;
-      }
-
-      .envelope-letter {
-        padding-top: 19px;
-      }
-
-      .letter-monogram {
-        width: 58px;
-        height: 58px;
-        margin-bottom: 9px;
+      .envelope-img {
+        width: min(76vw, 280px);
       }
     }
 
@@ -2061,12 +1733,8 @@
     }
 
     @media (max-width: 380px) {
-      .envelope-title {
-        font-size: 2.45rem;
-      }
-
-      .envelope-shell {
-        width: 92vw;
+      .envelope-img {
+        width: 84vw;
       }
 
       .scratch-date {
@@ -2075,24 +1743,24 @@
     }
 
     @media (max-height: 700px) and (max-width: 600px) {
-      .envelope-copy {
-        margin-bottom: 17px;
+      .envelope-img {
+        width: min(68vw, 240px);
       }
 
-      .envelope-eyebrow {
-        margin-bottom: 5px;
+      .envelope-invited {
+        margin-top: 18px;
       }
 
-      .envelope-date {
-        margin-top: 7px;
-      }
-
-      .envelope-shell {
-        width: min(76vw, 340px);
+      .envelope-hint {
+        margin-top: 6px;
       }
     }
 
     @media (prefers-reduced-motion: reduce) {
+      .gate-flower {
+        animation: none;
+      }
+
       *,
       *::before,
       *::after {
@@ -2112,7 +1780,6 @@
       .scratch-instruction,
       .scratch-skip,
       .btn-row,
-      .footer-share,
       .toast {
         display: none !important;
       }
@@ -2168,7 +1835,7 @@
   <div class="petals" id="petals" aria-hidden="true"></div>
 
   <!-- ============================================
-       MODERN ENVELOPE
+       ENVELOPE GATE
   ============================================ -->
 
   <div
@@ -2176,93 +1843,45 @@
     id="gate"
     aria-label="Open Rupesh and Nidhi's wedding invitation"
   >
-    <!-- Background Corner Artwork -->
-    <svg class="gate-corner-art top-left" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0,0 v100 c55.23,0 100,-44.77 100,-100 h-100 z" fill="#d6b56f" opacity="0.1"/>
-      <path d="M0,0 v80 c44.18,0 80,-35.82 80,-80 h-80 z" fill="#d6b56f" opacity="0.15"/>
-      <path d="M0,0 v60 c33.14,0 60,-26.86 60,-60 h-60 z" fill="#d6b56f" opacity="0.2"/>
-    </svg>
-
-    <svg class="gate-corner-art bottom-right" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0,0 v100 c55.23,0 100,-44.77 100,-100 h-100 z" fill="#d6b56f" opacity="0.1"/>
-      <path d="M0,0 v80 c44.18,0 80,-35.82 80,-80 h-80 z" fill="#d6b56f" opacity="0.15"/>
-      <path d="M0,0 v60 c33.14,0 60,-26.86 60,-60 h-60 z" fill="#d6b56f" opacity="0.2"/>
-    </svg>
+    <div class="gate-flowers" aria-hidden="true">
+      <span class="gate-flower" style="top:8%;left:6%;--size:18px;--rotate:-18deg"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="#ffe566"/><path d="M12 2c0 3-2 5-5 5 3 0 5 2 5 5 0-3 2-5 5-5-3 0-5-2-5-5z" fill="#e87898"/></svg></span>
+      <span class="gate-flower" style="top:14%;right:10%;--size:14px;--rotate:24deg;--opacity:0.7"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="#ffe566"/><path d="M12 2c0 3-2 5-5 5 3 0 5 2 5 5 0-3 2-5 5-5-3 0-5-2-5-5z" fill="#f06b8f"/></svg></span>
+      <span class="gate-flower" style="bottom:18%;left:8%;--size:20px;--rotate:-8deg"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="#ffe566"/><path d="M12 2c0 3-2 5-5 5 3 0 5 2 5 5 0-3 2-5 5-5-3 0-5-2-5-5z" fill="#e87898"/></svg></span>
+      <span class="gate-flower" style="bottom:12%;right:7%;--size:16px;--rotate:12deg;--opacity:0.75"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="#ffe566"/><path d="M12 2c0 3-2 5-5 5 3 0 5 2 5 5 0-3 2-5 5-5-3 0-5-2-5-5z" fill="#f06b8f"/></svg></span>
+      <span class="gate-flower" style="top:42%;left:4%;--size:13px;--rotate:-30deg;--opacity:0.6"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="#ffe566"/><path d="M12 2c0 3-2 5-5 5 3 0 5 2 5 5 0-3 2-5 5-5-3 0-5-2-5-5z" fill="#e87898"/></svg></span>
+      <span class="gate-flower" style="top:55%;right:5%;--size:15px;--rotate:35deg;--opacity:0.65"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="#ffe566"/><path d="M12 2c0 3-2 5-5 5 3 0 5 2 5 5 0-3 2-5 5-5-3 0-5-2-5-5z" fill="#e87898"/></svg></span>
+      <span class="gate-flower" style="top:18%;left:28%;--size:10px;--rotate:10deg;--opacity:0.5;--delay:1s"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="#fff"/><path d="M12 2c0 3-2 5-5 5 3 0 5 2 5 5 0-3 2-5 5-5-3 0-5-2-5-5z" fill="#fff" opacity="0.9"/></svg></span>
+      <span class="gate-flower" style="top:62%;left:22%;--size:14px;--rotate:-40deg;--opacity:0.55;--delay:0.5s"><svg viewBox="0 0 24 24"><path d="M12 4 C8 10 6 14 4 20 C10 16 14 14 20 12 C14 10 10 8 12 4Z" fill="#7a9a72"/></svg></span>
+    </div>
 
     <div class="envelope-scene">
 
-      <div class="envelope-copy">
-        <p class="envelope-eyebrow">
-          A Celebration of Love
-        </p>
-
-        <h1 class="envelope-title">
-          Rupesh <span>&amp;</span> Nidhi
-        </h1>
-      </div>
-
-      <div class="envelope-shell">
-
-        <div
-          class="envelope-back"
-          aria-hidden="true"
-        ></div>
-
-        <div class="envelope-letter">
-          <svg class="letter-header-art" viewBox="0 0 100 30" xmlns="http://www.w3.org/2000/svg">
-            <path d="M50 0 C60 15 80 15 100 15 L100 16 C80 16 60 16 50 30 C40 16 20 16 0 16 L0 15 C20 15 40 15 50 0 Z" fill="currentColor"/>
-          </svg>
-          
-          <div class="letter-monogram">
-            R <span>&amp;</span> N
-          </div>
-
-          <p class="letter-kicker">
-            Wedding Invitation
-          </p>
-
-          <p class="letter-venue">
-            Sindhu Bhawan · Rewa
-          </p>
-        </div>
-
-        <div
-          class="envelope-flap"
-          aria-hidden="true"
+      <button
+        class="envelope-open"
+        id="openGate"
+        type="button"
+        aria-label="Open the wedding invitation"
+      >
+        <img
+          class="envelope-img"
+          src="envelope-ref.png"
+          alt=""
+          width="600"
+          height="600"
+          loading="lazy"
         >
-          <svg class="flap-art" viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0,0 Q50,60 100,0 Z" fill="currentColor" opacity="0.1"/>
-            <path d="M20,0 Q50,40 80,0 Z" fill="currentColor" opacity="0.2"/>
-            <path d="M40,0 Q50,20 60,0 Z" fill="currentColor" opacity="0.3"/>
-          </svg>
-        </div>
-
-        <div
-          class="envelope-front"
-          aria-hidden="true"
-        >
-          <span class="envelope-fold-left"></span>
-          <span class="envelope-fold-right"></span>
-          <span class="envelope-fold-bottom">
-            <svg class="fold-bottom-art" viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg">
-              <path d="M50 0 C40 20 20 40 0 50 L100 50 C80 40 60 20 50 0 Z" fill="currentColor" opacity="0.3"/>
-            </svg>
+        <span class="envelope-seal-badge" aria-hidden="true">
+          <span class="envelope-seal-text">
+            R <span class="seal-amp">&amp;</span> N
           </span>
-        </div>
+        </span>
+      </button>
 
-        <!-- Seal Acts as the Opening Button -->
-        <button
-          class="envelope-seal"
-          id="openGate"
-          type="button"
-          aria-label="Open the wedding invitation"
-        >
-          <span>R</span>
-          <i>&amp;</i>
-          <span>N</span>
-        </button>
-      </div>
+      <h1 class="envelope-invited">You're Invited</h1>
 
+      <p class="envelope-hint">
+        Tap the envelope to open your invitation
+      </p>
     </div>
   </div>
 
@@ -2297,9 +1916,16 @@
       <span class="hero-decoration two" aria-hidden="true">❦</span>
 
       <div class="hero-inner">
-        <!-- Replace this with a downloaded Ganesha PNG or it falls back to the beautiful OM symbol -->
         <div class="hero-ganesha" aria-hidden="true">
-          <img src="ganesha.png" alt="Lord Ganesha" class="ganesha-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <img
+            src="ganesha.png"
+            alt="Lord Ganesha"
+            class="ganesha-icon"
+            width="96"
+            height="96"
+            loading="lazy"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+          >
           <div class="ganesha-fallback" style="display: none;">
             ॐ
           </div>
@@ -2733,23 +2359,6 @@
                 Open Maps
               </a>
 
-              <button
-                class="btn btn-outline"
-                id="calBtn"
-                type="button"
-              >
-                <span aria-hidden="true">▤</span>
-                Add to Calendar
-              </button>
-
-              <button
-                class="btn btn-outline share-trigger"
-                type="button"
-              >
-                <span aria-hidden="true">↗</span>
-                Share
-              </button>
-
             </div>
           </div>
         </div>
@@ -2785,8 +2394,14 @@
     <p class="footer-note">
       Made with love for a beautiful beginning
     </p>
-
   </footer>
+
+  <audio
+    id="backgroundMusic"
+    src="background.mp3"
+    loop
+    preload="auto"
+  ></audio>
 
   <div
     class="toast"
@@ -2806,8 +2421,7 @@
       weddingTarget: "2026-12-04T00:00:00+05:30",
       venueName: "Sindhu Bhawan",
       venueAddress: "Rewa, Madhya Pradesh, India",
-      mapQuery: "Sindhu Bhawan Rewa Madhya Pradesh",
-      calendarFileName: "Rupesh-Nidhi-Wedding-2026.ics"
+      mapQuery: "Sindhu Bhawan Rewa Madhya Pradesh"
     };
 
     const prefersReducedMotion = window.matchMedia(
@@ -2873,10 +2487,8 @@
 
         if (colorChoice === 1) {
           petal.classList.add("blush");
-        }
-
-        if (colorChoice === 2) {
-          petal.classList.add("sage");
+        } else if (colorChoice === 2) {
+          petal.classList.add("leaf");
         }
 
         petal.style.left =
@@ -2945,7 +2557,7 @@
 
       window.setTimeout(() => {
         body.classList.remove("locked");
-      }, 850);
+      }, 500);
 
       window.setTimeout(() => {
         gate.classList.add("is-gone");
@@ -2959,14 +2571,17 @@
             preventScroll: true
           });
         }
-      }, 1800);
+      }, 1100);
     }
 
-    // Since we removed the text button, only the seal triggers this now
     openGateButton.addEventListener(
       "click",
       openInvitation
     );
+
+    if (!prefersReducedMotion) {
+      createPetals(8);
+    }
 
     /* ============================================
        COUNTDOWN
@@ -3708,310 +3323,16 @@
       encodeURIComponent(CONFIG.mapQuery);
 
     /* ============================================
-       CALENDAR
+       BACKGROUND MUSIC (Reference MP3)
     ============================================ */
 
-    const calendarButton =
-      document.getElementById("calBtn");
+    const backgroundMusic =
+      document.getElementById("backgroundMusic");
 
-    function escapeCalendarText(value) {
-      return value
-        .replace(/\\/g, "\\\\")
-        .replace(/,/g, "\\,")
-        .replace(/;/g, "\\;")
-        .replace(/\n/g, "\\n");
-    }
-
-    calendarButton.addEventListener("click", () => {
-      const timestamp = new Date()
-        .toISOString()
-        .replace(/[-:]/g, "")
-        .replace(/\.\d{3}/, "");
-
-      const description =
-        "Join us for the wedding celebrations of Rupesh and Nidhi. " +
-        "Haldi, Mehndi, Engagement and Sangeet on 3 December. " +
-        "Wedding Ceremony and Reception on 4 December 2026.";
-
-      const calendarContent = [
-        "BEGIN:VCALENDAR",
-        "VERSION:2.0",
-        "PRODID:-//Rupesh and Nidhi Wedding//EN",
-        "CALSCALE:GREGORIAN",
-        "METHOD:PUBLISH",
-        "BEGIN:VEVENT",
-        "UID:rupesh-nidhi-wedding-2026@example.com",
-        `DTSTAMP:${timestamp}`,
-        "DTSTART;VALUE=DATE:20261203",
-        "DTEND;VALUE=DATE:20261205",
-        `SUMMARY:${escapeCalendarText(
-          "Rupesh & Nidhi Wedding Celebrations"
-        )}`,
-        `LOCATION:${escapeCalendarText(
-          `${CONFIG.venueName}, ${CONFIG.venueAddress}`
-        )}`,
-        `DESCRIPTION:${escapeCalendarText(description)}`,
-        "STATUS:CONFIRMED",
-        "END:VEVENT",
-        "END:VCALENDAR"
-      ].join("\r\n");
-
-      const calendarBlob = new Blob(
-        [calendarContent],
-        {
-          type: "text/calendar;charset=utf-8"
-        }
-      );
-
-      const calendarUrl =
-        URL.createObjectURL(calendarBlob);
-
-      const downloadLink =
-        document.createElement("a");
-
-      downloadLink.href = calendarUrl;
-
-      downloadLink.download =
-        CONFIG.calendarFileName;
-
-      document.body.appendChild(
-        downloadLink
-      );
-
-      downloadLink.click();
-      downloadLink.remove();
-
-      window.setTimeout(() => {
-        URL.revokeObjectURL(calendarUrl);
-      }, 1000);
-
-      showToast(
-        "Wedding calendar file downloaded."
-      );
-    });
-
-    /* ============================================
-       SHARE
-    ============================================ */
-
-    const shareButtons =
-      document.querySelectorAll(".share-trigger");
-
-    const shareText =
-      "You are invited to celebrate the wedding of " +
-      "Rupesh & Nidhi on 3 and 4 December 2026 " +
-      "at Sindhu Bhawan, Rewa.";
-
-    async function copyText(text) {
-      if (
-        navigator.clipboard &&
-        window.isSecureContext
-      ) {
-        await navigator.clipboard.writeText(text);
-        return;
-      }
-
-      const temporaryTextArea =
-        document.createElement("textarea");
-
-      temporaryTextArea.value = text;
-      temporaryTextArea.style.position = "fixed";
-      temporaryTextArea.style.opacity = "0";
-      temporaryTextArea.style.pointerEvents = "none";
-
-      document.body.appendChild(
-        temporaryTextArea
-      );
-
-      temporaryTextArea.select();
-      document.execCommand("copy");
-      temporaryTextArea.remove();
-    }
-
-    async function shareInvitation() {
-      const publicUrl =
-        /^https?:/i.test(window.location.href)
-          ? window.location.href
-          : "";
-
-      const shareData = {
-        title: "Rupesh & Nidhi | Wedding Invitation",
-        text: shareText
-      };
-
-      if (publicUrl) {
-        shareData.url = publicUrl;
-      }
-
-      if (navigator.share) {
-        try {
-          await navigator.share(shareData);
-          return;
-        } catch (error) {
-          if (error.name === "AbortError") {
-            return;
-          }
-        }
-      }
-
-      const fallbackText = publicUrl
-        ? `${shareText}\n${publicUrl}`
-        : shareText;
-
-      try {
-        await copyText(fallbackText);
-
-        showToast(
-          "Invitation details copied."
-        );
-      } catch (error) {
-        showToast(
-          "Unable to share the invitation."
-        );
-      }
-    }
-
-    shareButtons.forEach((button) => {
-      button.addEventListener(
-        "click",
-        shareInvitation
-      );
-    });
-
-    /* ============================================
-       AMBIENT MUSIC
-    ============================================ */
-
-    let audioContext = null;
-    let masterGain = null;
     let musicPlaying = false;
-    let musicTimer = null;
-    let noteIndex = 0;
 
-    const melody = [
-      523.25,
-      587.33,
-      659.25,
-      783.99,
-      880.00,
-      783.99,
-      659.25,
-      587.33,
-      523.25,
-      659.25,
-      783.99,
-      880.00,
-      987.77,
-      880.00,
-      783.99,
-      659.25
-    ];
-
-    function initializeAudio() {
-      if (audioContext) {
-        return true;
-      }
-
-      const AudioContextClass =
-        window.AudioContext ||
-        window.webkitAudioContext;
-
-      if (!AudioContextClass) {
-        musicBtn.hidden = true;
-        return false;
-      }
-
-      audioContext =
-        new AudioContextClass();
-
-      masterGain =
-        audioContext.createGain();
-
-      masterGain.gain.value = 0.35;
-
-      masterGain.connect(
-        audioContext.destination
-      );
-
-      return true;
-    }
-
-    function playNote(
-      frequency,
-      startTime,
-      volume = 0.12
-    ) {
-      if (!audioContext || !masterGain) {
-        return;
-      }
-
-      const oscillator =
-        audioContext.createOscillator();
-
-      const noteGain =
-        audioContext.createGain();
-
-      oscillator.type = "sine";
-
-      oscillator.frequency.setValueAtTime(
-        frequency,
-        startTime
-      );
-
-      noteGain.gain.setValueAtTime(
-        0.0001,
-        startTime
-      );
-
-      noteGain.gain.exponentialRampToValueAtTime(
-        volume,
-        startTime + 0.08
-      );
-
-      noteGain.gain.exponentialRampToValueAtTime(
-        0.0001,
-        startTime + 1.15
-      );
-
-      oscillator.connect(noteGain);
-      noteGain.connect(masterGain);
-
-      oscillator.start(startTime);
-      oscillator.stop(startTime + 1.2);
-    }
-
-    function scheduleMusicNote() {
-      window.clearTimeout(musicTimer);
-
-      if (!musicPlaying || !audioContext) {
-        return;
-      }
-
-      const now =
-        audioContext.currentTime;
-
-      const frequency =
-        melody[noteIndex];
-
-      playNote(
-        frequency,
-        now,
-        0.12
-      );
-
-      playNote(
-        frequency / 2,
-        now,
-        0.065
-      );
-
-      noteIndex =
-        (noteIndex + 1) % melody.length;
-
-      musicTimer = window.setTimeout(
-        scheduleMusicNote,
-        650
-      );
+    if (backgroundMusic) {
+      backgroundMusic.volume = 0.45;
     }
 
     function updateMusicButton() {
@@ -4031,56 +3352,43 @@
       musicBtn.setAttribute(
         "aria-label",
         musicPlaying
-          ? "Pause wedding music"
-          : "Play wedding music"
+          ? "Mute background music"
+          : "Unmute background music"
       );
     }
 
     async function startMusic() {
-      if (musicPlaying) {
+      if (musicPlaying || !backgroundMusic) {
         return;
       }
 
-      const audioSupported =
-        initializeAudio();
-
-      if (!audioSupported) {
-        return;
+      try {
+        await backgroundMusic.play();
+        musicPlaying = true;
+        musicBtn.classList.add("show");
+        updateMusicButton();
+      } catch (error) {
+        musicBtn.classList.add("show");
       }
-
-      if (audioContext.state === "suspended") {
-        await audioContext.resume();
-      }
-
-      musicPlaying = true;
-
-      musicBtn.classList.add("show");
-
-      updateMusicButton();
-      scheduleMusicNote();
     }
 
     function stopMusic() {
+      if (!backgroundMusic) {
+        return;
+      }
+
+      backgroundMusic.pause();
       musicPlaying = false;
-
-      window.clearTimeout(musicTimer);
-
       updateMusicButton();
     }
 
     musicBtn.addEventListener("click", () => {
       if (musicPlaying) {
         stopMusic();
-
-        showToast(
-          "Music paused."
-        );
+        showToast("Music muted.");
       } else {
         startMusic();
-
-        showToast(
-          "Playing a little wedding tune ♪"
-        );
+        showToast("Playing wedding music ♪");
       }
     });
   </script>
