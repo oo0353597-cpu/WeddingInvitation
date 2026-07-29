@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
 <head>
   <meta charset="UTF-8">
 
@@ -13,7 +13,7 @@
 
   <meta
     name="description"
-    content="You are invited to celebrate the wedding of Rupesh and Nidhi on 3 and 4 December 2026 at Sindhu Bhawan, Rewa."
+    content="With the blessings of our families, Rupesh and Nidhi cordially invite you to their wedding celebrations on 3rd and 4th December 2026 at Sindhu Bhawan, Rewa."
   >
 
   <meta name="theme-color" content="#b8c9b8">
@@ -22,7 +22,7 @@
 
   <meta
     property="og:description"
-    content="Join us for the wedding celebrations of Rupesh and Nidhi at Sindhu Bhawan, Rewa."
+    content="You are cordially invited to the wedding celebrations of Rupesh and Nidhi at Sindhu Bhawan, Rewa, on 3rd and 4th December 2026."
   >
 
   <meta property="og:type" content="website">
@@ -666,10 +666,11 @@
     .hero-names {
       color: var(--pine-deep);
       font-family: var(--serif);
-      font-size: clamp(3.4rem, 11vw, 6.5rem);
+      font-size: clamp(2rem, 10vw, 6.5rem);
       font-weight: 500;
       letter-spacing: -0.04em;
       line-height: 0.95;
+      white-space: nowrap;
     }
 
     .hero-names span {
@@ -1050,6 +1051,116 @@
 
     .scratch-skip[hidden] {
       display: none;
+    }
+
+    /* ============================================
+       FESTIVE FLOATS (DIYAS & MARIGOLDS)
+    ============================================ */
+
+    .festive-floats {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .festive-item {
+      position: absolute;
+      top: var(--y, 50%);
+      left: var(--x, 50%);
+      opacity: var(--opacity, 0.55);
+      animation: festiveDrift var(--duration, 7s) ease-in-out infinite;
+      animation-delay: var(--delay, 0s);
+      will-change: transform;
+    }
+
+    .float-diya {
+      width: var(--size, 28px);
+      filter: drop-shadow(0 4px 10px rgba(214, 120, 40, 0.25));
+    }
+
+    .float-diya svg {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .float-diya .diya-flame {
+      transform-origin: center bottom;
+      animation: diyaFlicker 2.4s ease-in-out infinite;
+      animation-delay: var(--delay, 0s);
+    }
+
+    .float-marigold {
+      position: relative;
+      width: var(--size, 22px);
+      height: var(--size, 22px);
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 35% 35%, #ffe566 0 22%, transparent 23%),
+        radial-gradient(circle at 65% 35%, #ffb347 0 24%, transparent 25%),
+        radial-gradient(circle at 50% 65%, #ff9f1a 0 26%, transparent 27%),
+        radial-gradient(circle at 25% 55%, #ffb347 0 20%, transparent 21%),
+        radial-gradient(circle at 75% 55%, #ff9f1a 0 20%, transparent 21%);
+      box-shadow: 0 2px 8px rgba(255, 159, 26, 0.2);
+    }
+
+    .float-marigold::after {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 30%;
+      height: 30%;
+      border-radius: 50%;
+      background: #ffe566;
+      content: "";
+      transform: translate(-50%, -50%);
+    }
+
+    @keyframes festiveDrift {
+      0%,
+      100% {
+        transform: translate3d(0, 0, 0) rotate(var(--rotate, 0deg));
+      }
+
+      50% {
+        transform: translate3d(0, -14px, 0) rotate(calc(var(--rotate, 0deg) + 6deg));
+      }
+    }
+
+    @keyframes diyaFlicker {
+      0%,
+      100% {
+        opacity: 0.82;
+        transform: scaleY(1);
+      }
+
+      40% {
+        opacity: 1;
+        transform: scaleY(1.12);
+      }
+
+      70% {
+        opacity: 0.9;
+        transform: scaleY(0.95);
+      }
+    }
+
+    .footer .festive-floats {
+      z-index: 0;
+    }
+
+    .footer > *:not(.festive-floats) {
+      position: relative;
+      z-index: 2;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .festive-item,
+      .float-diya .diya-flame {
+        animation: none;
+      }
     }
 
     /* ============================================
@@ -1499,6 +1610,8 @@
     ============================================ */
 
     .footer {
+      position: relative;
+      overflow: hidden;
       padding:
         76px
         22px
@@ -1595,37 +1708,120 @@
       }
     }
 
-    @media (max-width: 768px) {
-      .timeline-container::before {
-        left: 24px;
+    @media (max-width: 900px) {
+      .timeline-container {
+        max-width: 720px;
+        padding-inline: 12px;
       }
-      .timeline-day-marker {
-        margin: 0 0 40px 24px;
-        transform: translateX(-16px);
-      }
-      .timeline-item, 
-      .timeline-item:nth-child(even) {
-        flex-direction: row;
-        justify-content: flex-end;
-      }
-      .timeline-icon {
-        left: 24px;
-      }
+
       .timeline-content {
-        width: calc(100% - 65px);
+        width: calc(50% - 42px);
         padding: 30px 24px;
       }
+
+      .timeline-icon {
+        width: 46px;
+        height: 46px;
+      }
+
+      .event-name {
+        font-size: 1.45rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .timeline-container {
+        max-width: 420px;
+        margin-top: 48px;
+        padding: 10px 0 0;
+      }
+
+      .timeline-container::before {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .timeline-day-marker {
+        margin: 0 auto 36px;
+        transform: none;
+        font-size: 1.05rem;
+        padding: 10px 24px;
+      }
+
+      .timeline-item,
+      .timeline-item:nth-child(even) {
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        margin-bottom: 38px;
+      }
+
+      .timeline-icon {
+        position: relative;
+        top: auto;
+        left: auto;
+        width: 50px;
+        height: 50px;
+        margin-bottom: 16px;
+        transform: none;
+      }
+
+      .timeline-content {
+        width: 100%;
+        max-width: 100%;
+        padding: 28px 24px;
+        border-radius: 20px;
+      }
+
+      .timeline-content:hover {
+        transform: translateY(-4px);
+      }
+
       .timeline-item:nth-child(odd) .timeline-content,
       .timeline-item:nth-child(even) .timeline-content {
-        text-align: left;
+        text-align: center;
       }
+
       .timeline-item:nth-child(odd) .event-place,
       .timeline-item:nth-child(even) .event-place {
-        justify-content: flex-start;
+        justify-content: center;
       }
+
+      .timeline-content::after,
       .timeline-item:nth-child(odd) .timeline-content::after {
-        left: auto;
-        right: -30px;
+        right: auto;
+        left: 50%;
+        bottom: -34px;
+        transform: translateX(-50%);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .timeline-container {
+        max-width: 100%;
+      }
+
+      .timeline-day-marker {
+        font-size: 0.98rem;
+        padding: 9px 20px;
+        margin-bottom: 32px;
+      }
+
+      .timeline-item,
+      .timeline-item:nth-child(even) {
+        margin-bottom: 32px;
+      }
+
+      .timeline-content {
+        padding: 24px 20px;
+      }
+
+      .event-name {
+        font-size: 1.35rem;
+      }
+
+      .event-desc {
+        font-size: 0.84rem;
       }
     }
 
@@ -1707,6 +1903,11 @@
     }
 
     @media (max-width: 430px) {
+      .hero-names {
+        font-size: clamp(1.85rem, 8.6vw, 2.35rem);
+        letter-spacing: -0.03em;
+      }
+
       .hero-date {
         align-items: center;
         flex-direction: column;
@@ -1829,7 +2030,7 @@
 <body class="locked">
 
   <a class="skip-link" href="#main-content">
-    Skip to invitation
+    Skip to main invitation
   </a>
 
   <div class="petals" id="petals" aria-hidden="true"></div>
@@ -1841,7 +2042,7 @@
   <div
     class="gate"
     id="gate"
-    aria-label="Open Rupesh and Nidhi's wedding invitation"
+    aria-label="Open Rupesh and Nidhi wedding invitation"
   >
     <div class="gate-flowers" aria-hidden="true">
       <span class="gate-flower" style="top:8%;left:6%;--size:18px;--rotate:-18deg"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="#ffe566"/><path d="M12 2c0 3-2 5-5 5 3 0 5 2 5 5 0-3 2-5 5-5-3 0-5-2-5-5z" fill="#e87898"/></svg></span>
@@ -1860,7 +2061,7 @@
         class="envelope-open"
         id="openGate"
         type="button"
-        aria-label="Open the wedding invitation"
+        aria-label="Open wedding invitation"
       >
         <img
           class="envelope-img"
@@ -1880,7 +2081,7 @@
       <h1 class="envelope-invited">You're Invited</h1>
 
       <p class="envelope-hint">
-        Tap the envelope to open your invitation
+        Tap the envelope to open the invitation
       </p>
     </div>
   </div>
@@ -1893,7 +2094,7 @@
     class="music-btn"
     id="musicBtn"
     type="button"
-    aria-label="Play wedding music"
+    aria-label="Play background music"
     aria-pressed="false"
   >
     <span
@@ -1914,6 +2115,28 @@
     <section class="hero" id="home">
       <span class="hero-decoration one" aria-hidden="true">❦</span>
       <span class="hero-decoration two" aria-hidden="true">❦</span>
+
+      <div class="festive-floats hero-floats" aria-hidden="true">
+        <span class="festive-item float-diya" style="--x:8%;--y:22%;--size:26px;--delay:0s;--duration:8s;--rotate:-8deg;--opacity:0.5">
+          <svg viewBox="0 0 32 40" aria-hidden="true"><path fill="#c9a060" d="M6 30h20l-2 6H8l-2-6z"/><path fill="#d4b56f" d="M4 30c0-8 12-10 12-18 0 8 12 10 12 18H4z"/><ellipse class="diya-flame" fill="#ffb347" cx="16" cy="10" rx="3.5" ry="7"/><ellipse class="diya-flame" fill="#ffe566" cx="16" cy="12" rx="1.8" ry="4" opacity="0.9"/></svg>
+        </span>
+        <span class="festive-item float-diya" style="--x:88%;--y:28%;--size:22px;--delay:1.2s;--duration:9s;--rotate:12deg;--opacity:0.45">
+          <svg viewBox="0 0 32 40" aria-hidden="true"><path fill="#c9a060" d="M6 30h20l-2 6H8l-2-6z"/><path fill="#d4b56f" d="M4 30c0-8 12-10 12-18 0 8 12 10 12 18H4z"/><ellipse class="diya-flame" fill="#ffb347" cx="16" cy="10" rx="3.5" ry="7"/><ellipse class="diya-flame" fill="#ffe566" cx="16" cy="12" rx="1.8" ry="4" opacity="0.9"/></svg>
+        </span>
+        <span class="festive-item float-diya" style="--x:14%;--y:72%;--size:20px;--delay:2s;--duration:7.5s;--rotate:5deg;--opacity:0.4">
+          <svg viewBox="0 0 32 40" aria-hidden="true"><path fill="#c9a060" d="M6 30h20l-2 6H8l-2-6z"/><path fill="#d4b56f" d="M4 30c0-8 12-10 12-18 0 8 12 10 12 18H4z"/><ellipse class="diya-flame" fill="#ffb347" cx="16" cy="10" rx="3.5" ry="7"/><ellipse class="diya-flame" fill="#ffe566" cx="16" cy="12" rx="1.8" ry="4" opacity="0.9"/></svg>
+        </span>
+        <span class="festive-item float-diya" style="--x:82%;--y:68%;--size:24px;--delay:0.6s;--duration:8.5s;--rotate:-14deg;--opacity:0.48">
+          <svg viewBox="0 0 32 40" aria-hidden="true"><path fill="#c9a060" d="M6 30h20l-2 6H8l-2-6z"/><path fill="#d4b56f" d="M4 30c0-8 12-10 12-18 0 8 12 10 12 18H4z"/><ellipse class="diya-flame" fill="#ffb347" cx="16" cy="10" rx="3.5" ry="7"/><ellipse class="diya-flame" fill="#ffe566" cx="16" cy="12" rx="1.8" ry="4" opacity="0.9"/></svg>
+        </span>
+        <span class="festive-item float-marigold" style="--x:22%;--y:14%;--size:18px;--delay:0.4s;--duration:6s;--rotate:20deg;--opacity:0.55"></span>
+        <span class="festive-item float-marigold" style="--x:76%;--y:16%;--size:16px;--delay:1.8s;--duration:7s;--rotate:-15deg;--opacity:0.5"></span>
+        <span class="festive-item float-marigold" style="--x:6%;--y:48%;--size:14px;--delay:2.4s;--duration:6.5s;--rotate:8deg;--opacity:0.45"></span>
+        <span class="festive-item float-marigold" style="--x:92%;--y:52%;--size:20px;--delay:0.9s;--duration:8s;--rotate:-22deg;--opacity:0.52"></span>
+        <span class="festive-item float-marigold" style="--x:48%;--y:8%;--size:12px;--delay:3s;--duration:5.5s;--rotate:0deg;--opacity:0.4"></span>
+        <span class="festive-item float-marigold" style="--x:38%;--y:82%;--size:17px;--delay:1.1s;--duration:7.2s;--rotate:18deg;--opacity:0.48"></span>
+        <span class="festive-item float-marigold" style="--x:62%;--y:78%;--size:15px;--delay:2.8s;--duration:6.8s;--rotate:-10deg;--opacity:0.46"></span>
+      </div>
 
       <div class="hero-inner">
         <div class="hero-ganesha" aria-hidden="true">
@@ -1936,7 +2159,7 @@
         </p>
 
         <p class="hero-kicker">
-          Together with their families
+          Together with our families
         </p>
 
         <h1
@@ -1950,8 +2173,9 @@
         <div class="hero-divider"></div>
 
         <p class="hero-quote">
-          With the blessings of our parents and families, we
-          joyfully invite you to be part of our wedding celebrations.
+          With the blessings of our parents and elders, we
+          cordially request the pleasure of your gracious presence
+          at our wedding celebrations.
         </p>
 
         <div class="hero-date">
@@ -1963,7 +2187,7 @@
       <a
         class="scroll-cue"
         href="#countdown"
-        aria-label="Scroll to wedding countdown"
+        aria-label="Scroll to wedding date and countdown"
       >
         <span aria-hidden="true">⌄</span>
       </a>
@@ -1983,13 +2207,13 @@
           <p class="eyebrow">Save the Date</p>
 
           <h2 class="heading">
-            A Special Date<br>
-            <em>Awaits You</em>
+            Our Wedding Day<br>
+            <em>Is Near</em>
           </h2>
 
           <p class="lede">
-            Scratch the card with your finger or mouse to reveal
-            our wedding date and live countdown.
+            Scratch the card below to reveal our wedding date
+            <!-- and see how many days are left for the big day. -->
           </p>
         </div>
 
@@ -2007,11 +2231,11 @@
             <div class="scratch-content">
 
               <p class="scratch-date-label">
-                Our Wedding Celebration
+                Wedding Celebrations
               </p>
 
               <p class="scratch-date">
-                03 &amp; 04 December 2026
+                3rd &amp; 4th December 2026
               </p>
 
               <div
@@ -2041,7 +2265,7 @@
                 class="countdown-status"
                 id="countdownStatus"
               >
-                Until our wedding day
+                Left for our wedding day
               </p>
             </div>
 
@@ -2052,7 +2276,7 @@
               id="scratchCanvas"
               role="button"
               tabindex="0"
-              aria-label="Scratch with your finger or mouse to reveal the wedding date. Press Enter to reveal."
+              aria-label="Scratch to reveal the wedding date. Press Enter to reveal directly."
             ></canvas>
 
             <!-- Scratch message -->
@@ -2064,7 +2288,7 @@
             >
               <span class="scratch-symbol">✦</span>
               <strong>Scratch to Reveal</strong>
-              <small>Swipe your finger or mouse across the card</small>
+              <!-- <small>Swipe across the card with your finger or mouse</small> -->
             </div>
 
           </div>
@@ -2101,9 +2325,9 @@
           </p>
 
           <p class="blessing-text">
-            “Two souls, two families and one beautiful beginning —
-            we cannot wait to celebrate this special moment with
-            the people we love most.”
+            “As two families unite as one, we look forward
+            to celebrating this auspicious beginning with
+            all of you who mean the most to us.”
           </p>
         </div>
       </div>
@@ -2120,19 +2344,19 @@
           <p class="eyebrow">Celebrations</p>
 
           <h2 class="heading">
-            Wedding <em>Festivities</em>
+            Wedding <em>Functions</em>
           </h2>
 
           <p class="lede">
-            Two joyous days filled with tradition, music,
-            laughter, blessings and togetherness.
+            Two days of joy, tradition, music, dance, and
+            togetherness — we request you to kindly join us.
           </p>
         </div>
 
         <div class="timeline-container">
           
           <!-- Day 1 -->
-          <div class="timeline-day-marker reveal">03 December 2026</div>
+          <div class="timeline-day-marker reveal">3rd December 2026</div>
 
           <div class="timeline-item reveal">
             <div class="timeline-icon" aria-hidden="true">
@@ -2144,8 +2368,8 @@
             <div class="timeline-content">
               <h4 class="event-name">Haldi</h4>
               <p class="event-desc">
-                A vibrant turmeric ceremony filled with laughter,
-                blessings and beautiful shades of yellow.
+                A traditional haldi ceremony with turmeric,
+                laughter, and blessings from elders.
               </p>
             </div>
           </div>
@@ -2160,8 +2384,8 @@
             <div class="timeline-content">
               <h4 class="event-name">Mehndi</h4>
               <p class="event-desc">
-                An afternoon of intricate henna, vibrant colours,
-                music and cherished moments.
+                An evening of mehndi, music, and celebration
+                with family and friends.
               </p>
             </div>
           </div>
@@ -2176,8 +2400,8 @@
             <div class="timeline-content">
               <h4 class="event-name">Engagement</h4>
               <p class="event-desc">
-                The beautiful moment when two hearts promise
-                to begin a lifetime together.
+                The ring ceremony — our first step towards
+                a lifetime of togetherness.
               </p>
             </div>
           </div>
@@ -2192,14 +2416,14 @@
             <div class="timeline-content">
               <h4 class="event-name">Sangeet</h4>
               <p class="event-desc">
-                A joyful evening of music, dance, celebration
-                and unforgettable performances.
+                An evening of music, dance, and performances
+                by our near and dear ones.
               </p>
             </div>
           </div>
 
           <!-- Day 2 -->
-          <div class="timeline-day-marker reveal">04 December 2026</div>
+          <div class="timeline-day-marker reveal">4th December 2026</div>
 
           <div class="timeline-item reveal">
             <div class="timeline-icon" aria-hidden="true">
@@ -2211,8 +2435,8 @@
             <div class="timeline-content">
               <h4 class="event-name">Wedding Ceremony</h4>
               <p class="event-desc">
-                The sacred ceremony where two souls and two
-                families unite in love and blessings.
+                The sacred wedding ceremony where we take
+                our vows and begin our journey together.
               </p>
             </div>
           </div>
@@ -2227,8 +2451,8 @@
             <div class="timeline-content">
               <h4 class="event-name">Reception</h4>
               <p class="event-desc">
-                An elegant celebration with dinner, heartfelt
-                wishes and memories to last forever.
+                A grand reception with dinner and your
+                blessings to mark the new beginning.
               </p>
             </div>
           </div>
@@ -2249,15 +2473,15 @@
       <div class="wrap">
 
         <div class="reveal">
-          <p class="eyebrow">With Love</p>
+          <p class="eyebrow">Seeking Your Blessings</p>
 
           <h2 class="heading">
-            Awaiting Your <em>Presence</em>
+            Awaiting Your <em>Gracious Presence</em>
           </h2>
 
           <p class="lede">
-            Your blessings and gracious presence will make
-            our celebrations even more meaningful.
+            Your blessings and gracious presence will add
+            great joy and meaning to our celebrations.
           </p>
         </div>
 
@@ -2275,14 +2499,14 @@
           </p>
 
           <div class="family-names">
-            <span>Mr. Narendra Gupta</span>
+            <span>Shri Narendra Gupta</span>
             <span>&amp;</span>
-            <span>Mrs. Savita Gupta</span>
+            <span>Smt. Savita Gupta</span>
           </div>
 
           <p class="family-message">
-            Together with the Gupta family, we warmly invite
-            you to bless the couple and celebrate with us.
+            We, together with the Gupta family, warmly request
+            you to bless the couple and join us in the celebrations.
           </p>
         </div>
       </div>
@@ -2300,16 +2524,16 @@
 
         <div class="reveal">
           <p class="eyebrow">
-            Where We Celebrate
+            Venue Details
           </p>
 
           <h2 class="heading">
-            Wedding <em>Venue</em>
+            Celebration <em>Venue</em>
           </h2>
 
           <p class="lede">
-            We cannot wait to welcome you and celebrate
-            these unforgettable moments together.
+            We look forward to welcoming you and celebrating
+            these memorable moments together with you.
           </p>
         </div>
 
@@ -2331,7 +2555,7 @@
           <div class="venue-body">
 
             <p class="venue-label">
-              Celebration Location
+              Venue
             </p>
 
             <h3 class="venue-name">
@@ -2343,7 +2567,7 @@
             </p>
 
             <div class="venue-dates">
-              03 &amp; 04 December 2026
+              3rd &amp; 4th December 2026
             </div>
 
             <div class="btn-row">
@@ -2356,7 +2580,7 @@
                 rel="noopener noreferrer"
               >
                 <span aria-hidden="true">⌖</span>
-                Open Maps
+                View on Google Maps
               </a>
 
             </div>
@@ -2373,6 +2597,22 @@
 
   <footer class="footer">
 
+    <div class="festive-floats footer-floats" aria-hidden="true">
+      <span class="festive-item float-diya" style="--x:10%;--y:30%;--size:24px;--delay:0.3s;--duration:9s;--rotate:-6deg;--opacity:0.35">
+        <svg viewBox="0 0 32 40" aria-hidden="true"><path fill="#a08050" d="M6 30h20l-2 6H8l-2-6z"/><path fill="#c9a060" d="M4 30c0-8 12-10 12-18 0 8 12 10 12 18H4z"/><ellipse class="diya-flame" fill="#ffb347" cx="16" cy="10" rx="3.5" ry="7"/><ellipse class="diya-flame" fill="#ffe566" cx="16" cy="12" rx="1.8" ry="4" opacity="0.85"/></svg>
+      </span>
+      <span class="festive-item float-diya" style="--x:86%;--y:35%;--size:20px;--delay:1.5s;--duration:8s;--rotate:10deg;--opacity:0.32">
+        <svg viewBox="0 0 32 40" aria-hidden="true"><path fill="#a08050" d="M6 30h20l-2 6H8l-2-6z"/><path fill="#c9a060" d="M4 30c0-8 12-10 12-18 0 8 12 10 12 18H4z"/><ellipse class="diya-flame" fill="#ffb347" cx="16" cy="10" rx="3.5" ry="7"/><ellipse class="diya-flame" fill="#ffe566" cx="16" cy="12" rx="1.8" ry="4" opacity="0.85"/></svg>
+      </span>
+      <span class="festive-item float-diya" style="--x:18%;--y:70%;--size:18px;--delay:2.2s;--duration:7s;--rotate:4deg;--opacity:0.28">
+        <svg viewBox="0 0 32 40" aria-hidden="true"><path fill="#a08050" d="M6 30h20l-2 6H8l-2-6z"/><path fill="#c9a060" d="M4 30c0-8 12-10 12-18 0 8 12 10 12 18H4z"/><ellipse class="diya-flame" fill="#ffb347" cx="16" cy="10" rx="3.5" ry="7"/><ellipse class="diya-flame" fill="#ffe566" cx="16" cy="12" rx="1.8" ry="4" opacity="0.85"/></svg>
+      </span>
+      <span class="festive-item float-marigold" style="--x:78%;--y:18%;--size:16px;--delay:0.8s;--duration:6.5s;--rotate:-12deg;--opacity:0.38"></span>
+      <span class="festive-item float-marigold" style="--x:24%;--y:55%;--size:14px;--delay:2s;--duration:7s;--rotate:16deg;--opacity:0.32"></span>
+      <span class="festive-item float-marigold" style="--x:88%;--y:62%;--size:18px;--delay:1.2s;--duration:8s;--rotate:-8deg;--opacity:0.35"></span>
+      <span class="festive-item float-marigold" style="--x:52%;--y:12%;--size:12px;--delay:2.6s;--duration:6s;--rotate:0deg;--opacity:0.3"></span>
+    </div>
+
     <div
       class="footer-glyph"
       aria-hidden="true"
@@ -2385,14 +2625,14 @@
     </h2>
 
     <p class="footer-meta">
-      03 &amp; 04 December 2026<br>
+      3rd &amp; 4th December 2026<br>
       Sindhu Bhawan, Rewa
     </p>
 
     <div class="footer-line"></div>
 
     <p class="footer-note">
-      Made with love for a beautiful beginning
+      With love and best wishes — looking forward to your blessings
     </p>
   </footer>
 
@@ -2616,7 +2856,7 @@
         cdSeconds.textContent = "00";
 
         countdownStatus.textContent =
-          "Today begins our beautiful forever.";
+          "Today is our wedding day!";
 
         return;
       }
@@ -3141,7 +3381,7 @@
         createPetals(17, true);
 
         showToast(
-          "Wedding date revealed ✦"
+          "Wedding date revealed!"
         );
 
         window.setTimeout(() => {
@@ -3353,7 +3593,7 @@
         "aria-label",
         musicPlaying
           ? "Mute background music"
-          : "Unmute background music"
+          : "Play background music"
       );
     }
 
@@ -3385,10 +3625,10 @@
     musicBtn.addEventListener("click", () => {
       if (musicPlaying) {
         stopMusic();
-        showToast("Music muted.");
+        showToast("Music turned off.");
       } else {
         startMusic();
-        showToast("Playing wedding music ♪");
+        showToast("Music is now playing ♪");
       }
     });
   </script>
